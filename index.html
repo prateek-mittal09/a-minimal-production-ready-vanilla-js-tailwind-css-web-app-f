@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>countyer ++</title>
+  <meta name="description" content="A minimal persistent counter tool." />
+  <link rel="icon" href="data:,">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+  <main class="bg-white rounded-xl shadow-lg p-8 w-full max-w-xs flex flex-col items-center">
+    <h1 class="text-2xl font-bold mb-6 text-gray-800">countyer ++</h1>
+    <div id="counter-value" class="text-6xl font-mono font-bold mb-8 text-blue-600 select-none">0</div>
+    <div class="flex gap-4 w-full">
+      <button id="increment-btn" class="flex-1 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-xl font-semibold transition">+</button>
+      <button id="reset-btn" class="flex-1 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg text-xl font-semibold transition">Reset</button>
+    </div>
+  </main>
+  <script>
+    // Local storage key
+    const STORAGE_KEY = 'countyer-counter';
+
+    // Get elements
+    const counterValueEl = document.getElementById('counter-value');
+    const incrementBtn = document.getElementById('increment-btn');
+    const resetBtn = document.getElementById('reset-btn');
+
+    // Load counter from localStorage or default to 0
+    function loadCounter() {
+      const val = localStorage.getItem(STORAGE_KEY);
+      return val !== null ? parseInt(val, 10) : 0;
+    }
+
+    // Save counter to localStorage
+    function saveCounter(val) {
+      localStorage.setItem(STORAGE_KEY, val);
+    }
+
+    // Update UI
+    function renderCounter(val) {
+      counterValueEl.textContent = val;
+    }
+
+    // State
+    let counter = loadCounter();
+    renderCounter(counter);
+
+    // Event listeners
+    incrementBtn.addEventListener('click', () => {
+      counter += 1;
+      saveCounter(counter);
+      renderCounter(counter);
+    });
+
+    resetBtn.addEventListener('click', () => {
+      counter = 0;
+      saveCounter(counter);
+      renderCounter(counter);
+    });
+
+    // Ensure UI is responsive on resize
+    window.addEventListener('resize', () => {
+      // Tailwind handles responsiveness, but this is a placeholder for future needs
+    });
+  </script>
+</body>
+</html>
